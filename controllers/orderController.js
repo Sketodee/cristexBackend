@@ -41,7 +41,7 @@ const addOrder = async (req, res) => {
 }
 
 const getOrder = async (req, res) => {
-    const orders = await Order.find().populate('items')
+    const orders = await Order.find().populate('items').sort({ createdOn: -1 }).exec();
     if(!orders) return res.sendStatus(204)
     res.status(200).json(orders)
 }
