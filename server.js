@@ -1,7 +1,43 @@
+require('dotenv').config()
 const express = require ('express')
 const app = express()
-const PORT = process.env.port || 3000
+const cors = require('cors')
+const corsOptions = require ('./config/corsOptions')
+const {logger} = require ('./middleware/logEvents')
+const credentials = require('./middleware/credentials')
+const errorHandler = require ('./middleware/errorHandler')
+const mongoose = require('mongoose')
+const connectDB = require('./config/dbConn')
+const PORT = process.env.port || 3900
 
 
-//listen to port 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}...`))
+//connect to MongoDb
+connectDB()
+
+//custom middleware to log all requests and their origin 
+app.use(logger)
+
+//handle options credentials check - before CORS and fetch cookies credential requirements 
+ app.use(credentials)
+
+//apply middleware for CORS options 
+app.use(cors(corsOptions))
+
+//middleware to handle url encoed data 
+app.use(express.urlencoded({extended: false}))
+
+//middleware for json 
+app.use(express.json())
+
+//Route handlers without JWT authorization 
+app.use('/api/test', require('./routes/api/test'))
+app.use('/api/order', require('./routes/api/order'))
+
+//custom error handler 
+app.use(errorHandler)
+
+//listen to port
+mongoose.connection.once('open', () => {
+    console.log("Connected to MongoDB")
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}...`))
+})
