@@ -14,4 +14,7 @@ router.route('/updateorderstatus')
 router.route('/getorderbytrackingid')
     .get(orderController.getOrderByTrackingId)
 
+router.route('/deleteorderbytrackingid')
+    .get(orderController.deleteOrderByTrackingId)
+
 module.exports = router
