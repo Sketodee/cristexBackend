@@ -64,6 +64,7 @@ const updateOrderStatus = async (req, res) => {
 
         //change the state of the order 
         order.status = value.status
+        order.currentLocation = value.currentLocation
         const result = await order.save()
 
         res.status(200).json({ 'message': 'Order sucessfully updated' })
@@ -105,6 +106,9 @@ const deleteOrderByTrackingId = async (req, res) => {
     try {
         const result = await Order.findOneAndDelete({ trackingId: trackingId });
         if (result) {
+            // Delete associated items
+            const itemIds = result.items;
+            await Item.deleteMany({ _id: { $in: itemIds } });
             res.status(200).json({'message' : 'Order successfully deleted'})
         } else {
             return res.status(400).json({ 'message': 'Order not found' })
