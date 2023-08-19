@@ -14,6 +14,18 @@ const validateOrder = (order) => {
             'any.required': 'status is required',
             'string.empty': 'status cannot be empty',
         }), 
+        from: Joi.string().required().messages({
+            'any.required': 'Location is required',
+            'string.empty': 'Location cannot be empty'
+        }),
+        currentLocation: Joi.string().required().messages({
+            'any.required': 'Location is required',
+            'string.empty': 'Location cannot be empty'
+        }),
+        to: Joi.string().required().messages({
+            'any.required': 'Location is required',
+            'string.empty': 'Location cannot be empty'
+        }),
         items : Joi.array()
         .items(
              Joi.object({
@@ -46,7 +58,11 @@ const validateStatus = (status) => {
         status: Joi.string().required().valid('Order Confirmed', 'Picked By Courier', 'On The Way', 'Ready For Pickup').messages({
             'any.required': 'status is required',
             'string.empty': 'status cannot be empty',
-        })
+        }), 
+        currentLocation: Joi.string().required().messages({
+            'any.required': 'Location is required',
+            'string.empty': 'Location cannot be empty'
+        }),
     })
 
     return changeStatusSchema.validate(status, {abortEarly: false})

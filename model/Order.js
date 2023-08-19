@@ -22,6 +22,18 @@ const orderSchema = new Schema({
         type : String, 
         required: true
     }, 
+    from : {
+        type : String, 
+        required: true
+    }, 
+    currentLocation: {
+        type : String, 
+        required: true
+    }, 
+    to : {
+        type : String, 
+        required: true
+    },
     createdOn: {
         type : Date, 
         required: true
