@@ -26,6 +26,24 @@ const validateOrder = (order) => {
             'any.required': 'Location is required',
             'string.empty': 'Location cannot be empty'
         }),
+        receiverName: Joi.string().required().messages({
+            'any.required': 'Receiver name is required',
+            'string.empty': 'Receiver name cannot be empty'
+        }),
+        receiverAddress: Joi.string().required().messages({
+            'any.required': 'Receiver address is required',
+            'string.empty': 'Receiver address cannot be empty'
+        }),
+        receiverEmail: Joi.string().email().required().messages({
+            'any.required': 'Email is required',
+            'string.empty': 'Email cannot be empty',
+            'string.email': 'Invalid email format'
+        }), 
+        receiverPhone: Joi.string().pattern(/^[0-9]+$/).required().messages({
+            'any.required': 'Phone number is required',
+            'string.empty': 'Phone number cannot be empty',
+            'string.pattern.base': 'Phone number must contain only digits'
+        }), 
         items : Joi.array()
         .items(
              Joi.object({
