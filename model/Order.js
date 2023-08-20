@@ -38,6 +38,22 @@ const orderSchema = new Schema({
         type : Date, 
         required: true
     },
+    receiverName: {
+        type : String, 
+        required: true
+    }, 
+    receiverAddress: {
+        type : String, 
+        required: true
+    }, 
+    receiverPhone: {
+        type : String, 
+        required: true
+    }, 
+    receiverEmail : {
+        type : String, 
+        required: true
+    },
     items : [
         {type: Schema.Types.ObjectId, ref: 'Item' }
     ]
