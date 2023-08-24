@@ -10,7 +10,7 @@ const validateOrder = (order) => {
             'any.required': 'Shipping details is required',
             'string.empty': 'Shipping details cannot be empty'
         }),
-        status: Joi.string().required().valid('Order Confirmed', 'Picked By Courier', 'On The Way', 'Ready For Pickup').messages({
+        status: Joi.string().required().valid('Order Confirmed', 'Picked By Courier', 'On The Way', 'Ready For Pickup', 'On Hold').messages({
             'any.required': 'status is required',
             'string.empty': 'status cannot be empty',
         }), 
