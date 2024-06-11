@@ -1,6 +1,8 @@
 require('dotenv').config()
 const express = require ('express')
+const serverless = require("serverless-http");
 const app = express()
+const router = express.Router();
 const cors = require('cors')
 const corsOptions = require ('./config/corsOptions')
 const {logger} = require ('./middleware/logEvents')
@@ -36,8 +38,12 @@ app.use('/api/order', require('./routes/api/order'))
 //custom error handler 
 app.use(errorHandler)
 
+app.use("/.netlify/functions/app", router);
+
 //listen to port
 mongoose.connection.once('open', () => {
     console.log("Connected to MongoDB")
     app.listen(PORT, () => console.log(`Server running on port ${PORT}...`))
 })
+
+module.exports.handler = serverless(app);
