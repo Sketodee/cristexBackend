@@ -38,7 +38,7 @@ app.use('/api/order', require('./routes/api/order'))
 //custom error handler 
 app.use(errorHandler)
 
-app.use("/.netlify/functions/app", router);
+app.use("/.netlify/functions/server", router);
 
 //listen to port
 mongoose.connection.once('open', () => {
